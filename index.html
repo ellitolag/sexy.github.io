@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0f1117">
+    <title>Техтест | Аббревиатуры</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-blur-bg"></div>
+    
+    <div class="app-container">
+        <!-- Глобальный прогресс-бар -->
+        <div class="global-progress">
+            <div class="progress-track">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <!-- Шапка с плавающим эффектом -->
+        <header class="app-header glass-panel">
+            <div class="logo-area">
+                <div class="logo-icon">⚡</div>
+                <h1 class="app-title">Техтест</h1>
+            </div>
+            <div class="stats-group">
+                <div class="stat-chip" id="statCorrect">
+                    <span class="stat-icon">✓</span>
+                    <span class="stat-value">0</span>
+                </div>
+                <div class="stat-chip" id="statSkipped">
+                    <span class="stat-icon">↩</span>
+                    <span class="stat-value">0</span>
+                </div>
+                <div class="stat-chip" id="statRemaining">
+                    <span class="stat-icon">◎</span>
+                    <span class="stat-value">0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Основной контент -->
+        <main class="quiz-container">
+            <div class="quiz-card glass-panel">
+                <div class="card-glow"></div>
+                
+                <!-- Зона вопроса -->
+                <div class="question-zone">
+                    <div class="abbr-badge">Аббревиатура</div>
+                    <div class="abbreviation" id="abbreviation">—</div>
+                    <div class="hint-badge">
+                        <span class="hint-dot"></span>
+                        <span>Введите расшифровку</span>
+                    </div>
+                </div>
+
+                <div class="divider-gradient"></div>
+
+                <!-- Зона ответа -->
+                <div class="answer-zone">
+                    <div class="input-group">
+                        <div class="input-icon">✎</div>
+                        <input type="text" id="answerInput" class="modern-input" 
+                               placeholder="Напишите ответ..." autocomplete="off"
+                               inputmode="text" enterkeyhint="done">
+                    </div>
+                    
+                    <div class="result-area" id="resultArea">
+                        <div class="result-message" id="resultMessage"></div>
+                    </div>
+                </div>
+
+                <!-- Кнопки управления -->
+                <div class="action-bar">
+                    <button class="action-btn skip-btn" id="skipBtn">
+                        <span class="btn-icon">↩</span>
+                        <span class="btn-text">Пропустить</span>
+                    </button>
+                    <button class="action-btn primary-btn" id="checkBtn">
+                        <span class="btn-icon">✓</span>
+                        <span class="btn-text">Проверить</span>
+                    </button>
+                </div>
+
+                <div class="keyboard-hint">
+                    <span class="hint-mobile">📱 Нажмите кнопку или Enter</span>
+                    <span class="hint-desktop"><kbd>Enter</kbd> — проверить &nbsp; <kbd>Tab</kbd> — пропустить</span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Модальное окно с результатами -->
+    <div id="resultsModal" class="modal-overlay">
+        <div class="modal-container glass-panel">
+            <div class="modal-header">
+                <div class="modal-icon">🏆</div>
+                <h2>Результаты</h2>
+                <button class="modal-close" id="closeModalBtn">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="score-circle">
+                    <svg width="120" height="120" viewBox="0 0 120 120">
+                        <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(108, 99, 255, 0.1)" stroke-width="6"/>
+                        <circle cx="60" cy="60" r="54" fill="none" stroke="#6c63ff" stroke-width="6" 
+                                stroke-dasharray="339.292" stroke-dashoffset="339.292" stroke-linecap="round"
+                                transform="rotate(-90 60 60)" id="scoreCircleProgress"/>
+                    </svg>
+                    <div class="score-percent" id="scorePercent">0%</div>
+                </div>
+                <div class="score-stats" id="scoreStats">0 из 0 правильных</div>
+                <div class="grade-message" id="gradeMessage"></div>
+
+                <div class="stat-grid">
+                    <div class="stat-item correct-stat">
+                        <span class="stat-big" id="modalStatCorrect">0</span>
+                        <span class="stat-small">верно</span>
+                    </div>
+                    <div class="stat-item wrong-stat">
+                        <span class="stat-big" id="modalStatWrong">0</span>
+                        <span class="stat-small">неверно</span>
+                    </div>
+                    <div class="stat-item skip-stat">
+                        <span class="stat-big" id="modalStatSkipped">0</span>
+                        <span class="stat-small">пропущено</span>
+                    </div>
+                </div>
+
+                <div class="answers-accordion">
+                    <div class="accordion-header" id="accordionHeader">
+                        <span>📚 Все аббревиатуры</span>
+                        <span class="accordion-arrow">▼</span>
+                    </div>
+                    <div class="accordion-content" id="accordionContent">
+                        <div class="answers-list" id="answersList"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="action-btn primary-btn" id="restartBtn">🔄 Заново</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
